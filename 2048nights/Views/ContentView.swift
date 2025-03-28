@@ -12,6 +12,20 @@ struct ContentView: View {
     
     var body: some View {
         
+        HStack {
+            Spacer()
+            
+            Button(action: {
+                model.resetGame()
+            }) {
+                Text("Restart game")
+                    .font(.headline)
+                    .padding()
+                    .background(Color.yellow)
+                    .cornerRadius(8)
+            }
+        }.padding()
+        
         ScoreView(model: model.score)
         
         BoardView(model: model.board)
@@ -40,9 +54,9 @@ struct ContentView: View {
                 .font(.largeTitle)
         }
         
-        ArrowButtonsView { direction in
-            model.move(direction: direction)
-        }
+//        ArrowButtonsView { direction in
+//            model.move(direction: direction)
+//        }
     }
 }
 

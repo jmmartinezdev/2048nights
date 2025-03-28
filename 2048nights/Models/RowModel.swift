@@ -25,4 +25,8 @@ class RowModel {
     func getValue(position: Int) -> Int {
         return cells[position].value
     }
+    
+    func resetRow() {
+        cells.forEach({ $0.resetCell() })
+    }
 }

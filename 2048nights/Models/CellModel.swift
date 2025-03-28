@@ -50,4 +50,9 @@ class CellModel: ObservableObject {
             return .cellBackgroundHigher
         }
     }
+    
+    func resetCell() {
+        value = 0
+        isMerged = false
+    }
 }

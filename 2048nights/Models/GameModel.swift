@@ -25,6 +25,12 @@ class GameModel: ObservableObject {
         self.hasWon = false
     }
     
+    func resetGame() {
+        board.resetBoard()
+        score.resetScore()
+        hasWon = false
+    }
+    
     func getVector(direction: MoveDirection) -> (Int, Int) {
             switch direction {
             case .up:
@@ -71,18 +77,13 @@ class GameModel: ObservableObject {
             columns = Array(0..<board.size)
         }
         print("Moving \(direction) (\(vectorX) \(vectorY)) \(rows) \(columns)")
-        print(board.getBoardString())
         
         rows.forEach { row in 
             columns.forEach { column in
-//                let nextRow = row + vectorX
-//                let nextColumn = column + vectorY
                 guard !board.isCellAvailable(row, column) else {
                     return
                 }
-                print("r:\(row) c:\(column)")
                 let (nextRow, nextColumn) = findNearestValue(row: row, column: column, vectorX: vectorX, vectorY: vectorY)
-                print("nr:\(nextRow) nc:\(nextColumn)")
                 
                 guard board.isWithinBounds(nextRow, nextColumn) else {
                     return
@@ -105,11 +106,8 @@ class GameModel: ObservableObject {
                 if nextValue == currentValue, 
                     !board.isMerged(nextRow+vectorX, nextColumn+vectorY) {
                     
-                    print("Merge a:(\(nextRow), \(nextColumn)), b:(\(nextRow+vectorX), \(nextColumn+vectorY))")
                     board.setValue(nextRow+vectorX, nextColumn+vectorY, currentValue+nextValue)
-                    print(board.getBoardString())
                     board.setValue(nextRow, nextColumn, 0)
-                    print(board.getBoardString())
                     board.setIsMerged(nextRow+vectorX, nextColumn+vectorY, isMerged: true)
                     score.addScore(currentValue+nextValue)
                     if currentValue+nextValue == 2048 {
@@ -123,10 +121,9 @@ class GameModel: ObservableObject {
         
         if didMove {
             board.addNewValue()
-            print(board.getBoardString())
+            score.updateHighScoreIfNeeded()
         }
         
-        score.updateHighScoreIfNeeded()
     }
     
     func findNearestValue(row: Int, column: Int, vectorX: Int, vectorY: Int) -> (Int, Int) {

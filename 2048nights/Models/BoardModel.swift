@@ -69,6 +69,12 @@ class BoardModel: ObservableObject {
         }
     }
     
+    func resetBoard() {
+        board.forEach({ $0.resetRow() })
+        addNewValue()
+        addNewValue()
+    }
+    
     func getFormattedValue(_ row: Int, _ column: Int) -> String {
         let value = getValueFor(row, column)
         if value == 0 {

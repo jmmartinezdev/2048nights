@@ -11,6 +11,10 @@ import Foundation
 class ScoreModel: ObservableObject {
     @Published var score = 0
     
+    func resetScore() {
+        score = 0
+    }
+    
     func addScore(_ points: Int) {
         score = score + points
     }
