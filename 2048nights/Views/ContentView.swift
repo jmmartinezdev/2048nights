@@ -31,6 +31,13 @@ struct ContentView: View {
                                 ).onEnded({ value in
                                     computeGesture(value.translation.width, value.translation.height)
                                 }))
+                            .overlay {
+                                if model.gameOver {
+                                    GameOverMessageView {
+                                        model.resetGame()
+                                    }
+                                }
+                            }
 
                         if model.hasWon {
                             Text("you_won")

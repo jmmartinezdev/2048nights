@@ -26,6 +26,16 @@
         }
       }
     },
+    "game_over" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game over!"
+          }
+        }
+      }
+    },
     "high_score" : {
       "localizations" : {
         "en" : {
@@ -43,6 +53,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restart game"
+          }
+        }
+      }
+    },
+    "try_again" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
           }
         }
       }

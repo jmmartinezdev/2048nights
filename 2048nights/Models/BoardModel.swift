@@ -40,6 +40,10 @@ class BoardModel: ObservableObject {
         return (row >= 0) && (row < size) && (column >= 0) && (column < size)
     }
     
+    func emptyCellsAvailable() -> Bool {
+        board.first { $0.cells.first { $0.value == 0 } != nil } != nil
+    }
+    
     func isCellAvailable(_ row: Int, _ column: Int) -> Bool {
         return getValueFor(row, column) == 0
     }
@@ -73,6 +77,14 @@ class BoardModel: ObservableObject {
         board.forEach({ $0.resetRow() })
         addNewValue()
         addNewValue()
+    }
+    
+    func prepareForMove() {
+        for i in 0..<size {
+            for j in 0..<size {
+                setIsMerged(i, j, isMerged: false)
+            }
+        }
     }
     
     func getFormattedValue(_ row: Int, _ column: Int) -> String {

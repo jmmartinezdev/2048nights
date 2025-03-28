@@ -7,7 +7,7 @@
 
 import Combine
 
-enum MoveDirection {
+enum MoveDirection: CaseIterable {
     case up
     case left
     case right
@@ -18,17 +18,46 @@ class GameModel: ObservableObject {
     @Published var board: BoardModel
     @Published var score: ScoreModel
     @Published var hasWon: Bool
+    @Published var gameOver: Bool
+    @Published var continuePlaying: Bool
     
     init(boardSize: Int) {
         self.board = BoardModel(size: boardSize)
         self.score = ScoreModel()
         self.hasWon = false
+        self.gameOver = false
+        self.continuePlaying = false
     }
     
     func resetGame() {
         board.resetBoard()
         score.resetScore()
         hasWon = false
+        gameOver = false
+        continuePlaying = false
+    }
+    
+    func areMergesPossible() -> Bool {
+        for row in 0..<board.size {
+            for column in 0..<board.size {
+                for direction in MoveDirection.allCases {
+                    let cellValue = board.getValueFor(row, column)
+                    let (vectorRow, vectorColumn) = getVector(direction: direction)
+                    if board.isWithinBounds(row+vectorRow, column+vectorColumn) {
+                        let nextValue = board.getValueFor(row+vectorRow, column+vectorColumn)
+                        
+                        if cellValue == nextValue {
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
+    func areMovesPossible() -> Bool {
+        return board.emptyCellsAvailable() || areMergesPossible()
     }
     
     func getVector(direction: MoveDirection) -> (Int, Int) {
@@ -47,39 +76,35 @@ class GameModel: ObservableObject {
     func move(direction: MoveDirection) {
         var didMove = false
         
-        for i in 0..<board.size {
-            for j in 0..<board.size {
-                board.setIsMerged(i, j, isMerged: false)
-            }
-        }
+        board.prepareForMove()
         
 //        let (vectorX, vectorY) = getVector(direction: direction)
         
         var (vectorX, vectorY): (Int, Int)
-        var rows: [Int]
-        var columns: [Int]
+        var orderedRows: [Int]
+        var orderedColumns: [Int]
         switch direction {
         case .up:
             (vectorX, vectorY) = (-1, 0)
-            rows = Array(0..<board.size)
-            columns = Array(0..<board.size)
+            orderedRows = Array(0..<board.size)
+            orderedColumns = Array(0..<board.size)
         case .left:
             (vectorX, vectorY) = (0, -1)
-            rows = Array(0..<board.size)
-            columns = Array(0..<board.size)
+            orderedRows = Array(0..<board.size)
+            orderedColumns = Array(0..<board.size)
         case .right:
             (vectorX, vectorY) = (0, 1)
-            rows = Array(0..<board.size)
-            columns = Array(0..<board.size).reversed()
+            orderedRows = Array(0..<board.size)
+            orderedColumns = Array(0..<board.size).reversed()
         case .down:
             (vectorX, vectorY) = (1, 0)
-            rows = Array(0..<board.size).reversed()
-            columns = Array(0..<board.size)
+            orderedRows = Array(0..<board.size).reversed()
+            orderedColumns = Array(0..<board.size)
         }
-        print("Moving \(direction) (\(vectorX) \(vectorY)) \(rows) \(columns)")
+        print("Moving \(direction) (\(vectorX) \(vectorY)) \(orderedRows) \(orderedColumns)")
         
-        rows.forEach { row in 
-            columns.forEach { column in
+        orderedRows.forEach { row in 
+            orderedColumns.forEach { column in
                 guard !board.isCellAvailable(row, column) else {
                     return
                 }
@@ -102,7 +127,7 @@ class GameModel: ObservableObject {
                 }
                 
                 let nextValue = board.getValueFor(nextRow+vectorX, nextColumn+vectorY)
-                if nextValue == currentValue, 
+                if nextValue == currentValue,
                     !board.isMerged(nextRow+vectorX, nextColumn+vectorY) {
                     
                     board.setValue(nextRow+vectorX, nextColumn+vectorY, currentValue+nextValue)
@@ -121,6 +146,9 @@ class GameModel: ObservableObject {
         if didMove {
             board.addNewValue()
             score.updateHighScoreIfNeeded()
+            if !areMovesPossible() {
+                gameOver = true
+            }
         }
         
     }
