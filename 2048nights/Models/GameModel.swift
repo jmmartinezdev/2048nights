@@ -17,10 +17,12 @@ enum MoveDirection {
 class GameModel: ObservableObject {
     @Published var board: BoardModel
     @Published var score: ScoreModel
+    @Published var hasWon: Bool
     
     init(boardSize: Int) {
         self.board = BoardModel(size: boardSize)
         self.score = ScoreModel()
+        self.hasWon = false
     }
     
     func getVector(direction: MoveDirection) -> (Int, Int) {
@@ -110,6 +112,9 @@ class GameModel: ObservableObject {
                     print(board.getBoardString())
                     board.setIsMerged(nextRow+vectorX, nextColumn+vectorY, isMerged: true)
                     score.addScore(currentValue+nextValue)
+                    if currentValue+nextValue == 2048 {
+                        self.hasWon = true
+                    }
                     didMove = true
                 }
                 

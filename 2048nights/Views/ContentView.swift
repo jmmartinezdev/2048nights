@@ -35,6 +35,11 @@ struct ContentView: View {
                 }
             }))
         
+        if model.hasWon {
+            Text("You won!")
+                .font(.largeTitle)
+        }
+        
         ArrowButtonsView { direction in
             model.move(direction: direction)
         }
