@@ -38,11 +38,15 @@ struct ContentView: View {
                                     }
                                 }
                             }
-
-                        if model.hasWon {
-                            Text("you_won")
-                                .font(.largeTitle)
-                        }
+                            .overlay {
+                                if model.hasWon && !model.continuePlaying {
+                                    WinMessageView {
+                                        model.resetGame()
+                                    } continueAction: {
+                                        model.continuePlaying = true
+                                    }
+                                }
+                            }
 
                         //        ArrowButtonsView { direction in
                         //            model.move(direction: direction)

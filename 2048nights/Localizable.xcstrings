@@ -16,6 +16,16 @@
     "⬇" : {
 
     },
+    "continue_playing" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "keep going"
+          }
+        }
+      }
+    },
     "current_score" : {
       "localizations" : {
         "en" : {
