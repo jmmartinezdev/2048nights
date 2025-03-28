@@ -11,9 +11,9 @@ struct BoardView: View {
     @ObservedObject var model: BoardModel
     
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 8) {
             ForEach(model.board, id: \.id) { rowModel in
-                HStack(spacing: 2) {
+                HStack(spacing: 8) {
                     ForEach(rowModel.cells, id: \.id) { cellModel in
                         CellView(model: cellModel)
                         
@@ -24,9 +24,10 @@ struct BoardView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .padding(8)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
-        .border(Color.black, width: 2)
         .aspectRatio(1.0, contentMode: .fit)
+        .cornerRadius(8)
     }
 }

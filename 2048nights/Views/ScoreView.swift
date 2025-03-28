@@ -11,13 +11,18 @@ struct ScoreView: View {
     @ObservedObject var model: GameModel
     
     var body: some View {
-        VStack(content: {
-            Text("Score")
-            Text("\(model.score)")
-                .font(.title)
-        })
-        .padding()
-        .background(Color.accentColor)
+        HStack {
+            Spacer()
+            
+            VStack(content: {
+                Text("Score")
+                Text("\(model.score)")
+                    .font(.title)
+            })
+            .padding()
+            .background(Color.accentColor)
+            .cornerRadius(8)
+        }.padding()
     }
 }
 

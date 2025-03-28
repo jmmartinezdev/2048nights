@@ -16,5 +16,6 @@ struct CellView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .foregroundStyle(.cellText)
             .background(model.getBackgroundColor())
+            .cornerRadius(8)
     }
 }
