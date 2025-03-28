@@ -26,7 +26,7 @@ struct BoardView: View {
         }
         .padding(8)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black)
+        .background(.boardLines)
         .aspectRatio(1.0, contentMode: .fit)
         .cornerRadius(8)
     }

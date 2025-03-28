@@ -17,8 +17,10 @@ struct ScoreView: View {
             
             VStack(content: {
                 Text("current_score")
+                    .foregroundStyle(.scoreText)
                 Text("\(model.score)")
                     .font(.title)
+                    .foregroundStyle(.scoreText)
             })
             .padding()
             .background(Color.accentColor)
@@ -26,8 +28,10 @@ struct ScoreView: View {
             
             VStack(content: {
                 Text("high_score")
+                    .foregroundStyle(.scoreText)
                 Text("\(highScore)")
                     .font(.title)
+                    .foregroundStyle(.scoreText)
             })
             .padding()
             .background(Color.accentColor)
