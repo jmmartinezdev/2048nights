@@ -27,7 +27,7 @@ struct ContentView: View {
                         model.move(direction: .right)
                     }
                 } else {
-                    if horizontalMovement < 0 {
+                    if verticalMovement < 0 {
                         model.move(direction: .up)
                     } else {
                         model.move(direction: .down)
