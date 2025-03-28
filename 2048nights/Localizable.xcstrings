@@ -1,0 +1,62 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld" : {
+
+    },
+    "➡" : {
+
+    },
+    "⬅" : {
+
+    },
+    "⬆" : {
+
+    },
+    "⬇" : {
+
+    },
+    "current_score" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score"
+          }
+        }
+      }
+    },
+    "high_score" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High score"
+          }
+        }
+      }
+    },
+    "restart_game" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart game"
+          }
+        }
+      }
+    },
+    "you_won" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You won!"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

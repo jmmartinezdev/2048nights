@@ -16,7 +16,7 @@ struct ScoreView: View {
             Spacer()
             
             VStack(content: {
-                Text("Score")
+                Text("current_score")
                 Text("\(model.score)")
                     .font(.title)
             })
@@ -25,7 +25,7 @@ struct ScoreView: View {
             .cornerRadius(8)
             
             VStack(content: {
-                Text("High Score")
+                Text("high_score")
                 Text("\(highScore)")
                     .font(.title)
             })

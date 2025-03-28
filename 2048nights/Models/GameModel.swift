@@ -95,7 +95,6 @@ class GameModel: ObservableObject {
                     board.setValue(row, column, 0)
                     board.setValue(nextRow, nextColumn, currentValue)
                     didMove = true
-                    print(board.getBoardString())
                 }
                 
                 guard board.isWithinBounds(nextRow+vectorX, nextColumn+vectorY) else {

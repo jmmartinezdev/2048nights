@@ -18,7 +18,7 @@ struct ContentView: View {
             Button(action: {
                 model.resetGame()
             }) {
-                Text("Restart game")
+                Text("restart_game")
                     .font(.headline)
                     .padding()
                     .background(Color.yellow)
@@ -50,7 +50,7 @@ struct ContentView: View {
             }))
         
         if model.hasWon {
-            Text("You won!")
+            Text("you_won")
                 .font(.largeTitle)
         }
         
