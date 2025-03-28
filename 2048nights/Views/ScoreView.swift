@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ScoreView: View {
-    @ObservedObject var model: GameModel
+    @ObservedObject var model: ScoreModel
+    @AppStorage("high_score") var highScore = 0
     
     var body: some View {
         HStack {
@@ -22,10 +23,19 @@ struct ScoreView: View {
             .padding()
             .background(Color.accentColor)
             .cornerRadius(8)
+            
+            VStack(content: {
+                Text("High Score")
+                Text("\(highScore)")
+                    .font(.title)
+            })
+            .padding()
+            .background(Color.accentColor)
+            .cornerRadius(8)
         }.padding()
     }
 }
 
 #Preview {
-    ScoreView(model: GameModel(board: BoardModel(size: 4)))
+    ScoreView(model: ScoreModel())
 }

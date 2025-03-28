@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         
-        ScoreView(model: model)
+        ScoreView(model: model.score)
         
         BoardView(model: model.board)
             .padding()
@@ -24,5 +24,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(model: GameModel(board: BoardModel(size: 4)))
+    ContentView(model: GameModel(boardSize: 4))
 }

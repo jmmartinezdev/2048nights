@@ -16,11 +16,11 @@ enum MoveDirection {
 
 class GameModel: ObservableObject {
     @Published var board: BoardModel
-    @Published var score = 0
+    @Published var score: ScoreModel
     
-    init(board: BoardModel) {
-        self.board = board
-        
+    init(boardSize: Int) {
+        self.board = BoardModel(size: boardSize)
+        self.score = ScoreModel()
     }
     
     func getVector(direction: MoveDirection) -> (Int, Int) {
@@ -109,7 +109,7 @@ class GameModel: ObservableObject {
                     board.setValue(nextRow, nextColumn, 0)
                     print(board.getBoardString())
                     board.setIsMerged(nextRow+vectorX, nextColumn+vectorY, isMerged: true)
-                    score += currentValue+nextValue
+                    score.addScore(currentValue+nextValue)
                     didMove = true
                 }
                 
@@ -120,6 +120,8 @@ class GameModel: ObservableObject {
             board.addNewValue()
             print(board.getBoardString())
         }
+        
+        score.updateHighScoreIfNeeded()
     }
     
     func findNearestValue(row: Int, column: Int, vectorX: Int, vectorY: Int) -> (Int, Int) {
