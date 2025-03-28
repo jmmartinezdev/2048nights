@@ -14,7 +14,7 @@ struct CellView: View {
         Text(model.getValueText())
             .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .foregroundStyle(Color.white)
-            .background(model.getColorForValue())
+            .foregroundStyle(.cellText)
+            .background(model.getBackgroundColor())
     }
 }

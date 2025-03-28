@@ -25,28 +25,29 @@ class CellModel: ObservableObject {
         return "\(value)"
     }
     
-    func getColorForValue() -> Color {
-        switch value {
-        case 8:
-            return Color.orange
-        case 16:
-            return Color.yellow
-        case 32:
-            return Color.red
-        case 64:
-            return Color.blue
-        case 128:
-            return Color.green
-        case 256:
-            return Color.indigo
-        case 512:
-            return Color.mint
-        case 1024:
-            return Color.pink
-        case 2048:
-            return Color.purple
-        default:
-            return Color.black
+    func getBackgroundColor() -> Color {
+        if value < 8 {
+            return .cellBackgroundLower
+        } else if value == 8 {
+            return .cellBackground8
+        } else if value == 16 {
+            return .cellBackground16
+        } else if value == 32 {
+            return .cellBackground32
+        } else if value == 64 {
+            return .cellBackground64
+        } else if value == 128 {
+            return .cellBackground128
+        } else if value == 256 {
+            return .cellBackground256
+        } else if value == 512 {
+            return .cellBackground512
+        } else if value == 1024 {
+            return .cellBackground1024
+        } else if value == 2048 {
+            return .cellBackground2048
+        } else {
+            return .cellBackgroundHigher
         }
     }
 }
