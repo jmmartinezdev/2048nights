@@ -13,27 +13,34 @@ struct ContentView: View {
 
     var body: some View {
 
-            Color.contentBackground
-                .ignoresSafeArea()
-                .overlay {
-                    VStack {
-                        RestartGameView {
-                            model.resetGame()
-                        }
+        Color.contentBackground
+            .ignoresSafeArea()
+            .overlay {
+                VStack {
+                    RestartGameView {
+                        model.resetGame()
+                    }
 
-                        ScoreView(model: model.score)
+                    ScoreView(model: model.score)
 
-                        BoardView(model: model.board)
-                            .padding()
-                            .gesture(
-                                DragGesture(
-                                    minimumDistance: 20, coordinateSpace: .global
-                                ).onEnded({ value in
-                                    computeGesture(value.translation.width, value.translation.height)
-                                }))
-                            .focusable()
-                            .focused($isFocused)
-                            .onKeyPress(keys: [.upArrow, .downArrow, .leftArrow, .rightArrow], action: { keyPress in
+                    BoardView(model: model.board)
+                        .padding()
+                        .gesture(
+                            DragGesture(
+                                minimumDistance: 20, coordinateSpace: .global
+                            ).onEnded({ value in
+                                computeGesture(
+                                    value.translation.width,
+                                    value.translation.height)
+                            })
+                        )
+                        .focusable()
+                        .focused($isFocused)
+                        .onKeyPress(
+                            keys: [
+                                .upArrow, .downArrow, .leftArrow, .rightArrow,
+                            ],
+                            action: { keyPress in
                                 Task { @MainActor in
                                     if keyPress.key == .upArrow {
                                         model.move(direction: .up)
@@ -46,35 +53,38 @@ struct ContentView: View {
                                     }
                                 }
                                 return .handled
-                            })
-                            .onAppear(perform: {
-                                isFocused = true
-                            })
-                            .overlay {
-                                if model.gameOver {
-                                    GameOverMessageView {
-                                        model.resetGame()
-                                    }
+                            }
+                        )
+                        .onAppear(perform: {
+                            isFocused = true
+                        })
+                        .overlay {
+                            if model.gameOver {
+                                GameOverMessageView {
+                                    model.resetGame()
                                 }
                             }
-                            .overlay {
-                                if model.hasWon && !model.continuePlaying {
-                                    WinMessageView {
-                                        model.resetGame()
-                                    } continueAction: {
-                                        model.continuePlaying = true
-                                    }
+                        }
+                        .overlay {
+                            if model.hasWon && !model.continuePlaying {
+                                WinMessageView {
+                                    model.resetGame()
+                                } continueAction: {
+                                    model.continuePlaying = true
                                 }
                             }
+                        }
 
-                        //        ArrowButtonsView { direction in
-                        //            model.move(direction: direction)
-                        //        }
-                    }
+//                        ArrowButtonsView { direction in
+//                            model.move(direction: direction)
+//                        }
                 }
+            }
     }
-    
-    func computeGesture(_ horizontalMovement: Double, _ verticalMovement: Double) {
+
+    func computeGesture(
+        _ horizontalMovement: Double, _ verticalMovement: Double
+    ) {
         if abs(horizontalMovement) > abs(verticalMovement) {
             if horizontalMovement < 0 {
                 model.move(direction: .left)
