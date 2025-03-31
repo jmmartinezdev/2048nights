@@ -11,7 +11,7 @@ import SwiftUI
 struct _048nightsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(model: GameModel(boardSize: 4))
+            ContentView(model: GameModel())
         }
     }
 }

@@ -12,7 +12,7 @@ class BoardModel: ObservableObject {
     
     @Published var board: [RowModel]
     
-    init(size: Int) {
+    init(size: Int = 4) {
         self.size = size
         self.board = []
         self.createRows()
@@ -32,7 +32,6 @@ class BoardModel: ObservableObject {
     }
     
     func setValue(_ row: Int, _ column: Int, _ value: Int) {
-        print("setValue (\(row),\(column)) \(value)")
         board[row].cells[column].value = value
     }
     

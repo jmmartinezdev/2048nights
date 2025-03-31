@@ -107,5 +107,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(model: GameModel(boardSize: 4))
+    ContentView(model: GameModel())
 }

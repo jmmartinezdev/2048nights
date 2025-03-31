@@ -21,7 +21,7 @@ class GameModel: ObservableObject {
     @Published var gameOver: Bool
     @Published var continuePlaying: Bool
     
-    init(boardSize: Int) {
+    init(boardSize: Int = 4) {
         self.board = BoardModel(size: boardSize)
         self.score = ScoreModel()
         self.hasWon = false
