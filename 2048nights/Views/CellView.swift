@@ -12,10 +12,12 @@ struct CellView: View {
     
     var body: some View {
         Text(model.getValueText())
-            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .font(.title)
+            .frame(minWidth: 72, maxWidth: .infinity, minHeight: 72, maxHeight: .infinity)
             .foregroundStyle(.cellText)
             .background(model.getBackgroundColor())
+            .aspectRatio(1.0, contentMode: .fit)
+            .lineLimit(1)
             .cornerRadius(8)
     }
 }
