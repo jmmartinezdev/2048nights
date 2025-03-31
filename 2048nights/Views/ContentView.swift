@@ -41,17 +41,7 @@ struct ContentView: View {
                                 .upArrow, .downArrow, .leftArrow, .rightArrow,
                             ],
                             action: { keyPress in
-                                Task { @MainActor in
-                                    if keyPress.key == .upArrow {
-                                        model.move(direction: .up)
-                                    } else if keyPress.key == .downArrow {
-                                        model.move(direction: .down)
-                                    } else if keyPress.key == .leftArrow {
-                                        model.move(direction: .left)
-                                    } else if keyPress.key == .rightArrow {
-                                        model.move(direction: .right)
-                                    }
-                                }
+                                processKeyboard(keyPress)
                                 return .handled
                             }
                         )
@@ -80,6 +70,20 @@ struct ContentView: View {
 //                        }
                 }
             }
+    }
+    
+    func processKeyboard(_ keyPress: KeyPress) {
+        Task { @MainActor in
+            if keyPress.key == .upArrow {
+                model.move(direction: .up)
+            } else if keyPress.key == .downArrow {
+                model.move(direction: .down)
+            } else if keyPress.key == .leftArrow {
+                model.move(direction: .left)
+            } else if keyPress.key == .rightArrow {
+                model.move(direction: .right)
+            }
+        }
     }
 
     func computeGesture(
