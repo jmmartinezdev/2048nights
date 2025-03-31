@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var model: GameModel
+    @FocusState private var isFocused: Bool
 
     var body: some View {
 
-        NavigationView {
             Color.contentBackground
                 .ignoresSafeArea()
                 .overlay {
@@ -31,6 +31,25 @@ struct ContentView: View {
                                 ).onEnded({ value in
                                     computeGesture(value.translation.width, value.translation.height)
                                 }))
+                            .focusable()
+                            .focused($isFocused)
+                            .onKeyPress(keys: [.upArrow, .downArrow, .leftArrow, .rightArrow], action: { keyPress in
+                                Task { @MainActor in
+                                    if keyPress.key == .upArrow {
+                                        model.move(direction: .up)
+                                    } else if keyPress.key == .downArrow {
+                                        model.move(direction: .down)
+                                    } else if keyPress.key == .leftArrow {
+                                        model.move(direction: .left)
+                                    } else if keyPress.key == .rightArrow {
+                                        model.move(direction: .right)
+                                    }
+                                }
+                                return .handled
+                            })
+                            .onAppear(perform: {
+                                isFocused = true
+                            })
                             .overlay {
                                 if model.gameOver {
                                     GameOverMessageView {
@@ -53,7 +72,6 @@ struct ContentView: View {
                         //        }
                     }
                 }
-        }
     }
     
     func computeGesture(_ horizontalMovement: Double, _ verticalMovement: Double) {
