@@ -10,7 +10,7 @@ import Combine
 class BoardModel: ObservableObject {
     let size: Int
     
-    @Published var board: [RowModel]
+    @Published var board: [[CellModel]]
     
     init(size: Int = 4) {
         self.size = size
@@ -22,17 +22,21 @@ class BoardModel: ObservableObject {
     }
     
     private func createRows() {
-        for i in 0..<size {
-            board.append(RowModel(id: i, size: size))
+        for _ in 0..<size {
+            var row: [CellModel] = []
+            for j in 0..<size {
+                row.append(CellModel(id: j))
+            }
+            board.append(row)
         }
     }
     
     func getValueFor(_ row: Int, _ column: Int) -> Int {
-        return board[row].getValue(position: column)
+        return board[row][column].value
     }
     
     func setValue(_ row: Int, _ column: Int, _ value: Int) {
-        board[row].cells[column].value = value
+        board[row][column].value = value
     }
     
     func isWithinBounds(_ row: Int, _ column: Int) -> Bool {
@@ -40,7 +44,7 @@ class BoardModel: ObservableObject {
     }
     
     func emptyCellsAvailable() -> Bool {
-        board.first { $0.cells.first { $0.value == 0 } != nil } != nil
+        board.first { $0.first { $0.value == 0 } != nil } != nil
     }
     
     func isCellAvailable(_ row: Int, _ column: Int) -> Bool {
@@ -48,11 +52,11 @@ class BoardModel: ObservableObject {
     }
     
     func setIsMerged(_ row: Int, _ column: Int, isMerged: Bool) { 
-        board[row].cells[column].isMerged = isMerged
+        board[row][column].isMerged = isMerged
     }
     
     func isMerged(_ row: Int, _ column: Int) -> Bool {
-        return board[row].cells[column].isMerged
+        return board[row][column].isMerged
     }
     
     private func generateValue() -> Int {
@@ -73,7 +77,7 @@ class BoardModel: ObservableObject {
     }
     
     func resetBoard() {
-        board.forEach({ $0.resetRow() })
+        board.forEach({ $0.forEach({ $0.resetCell() }) })
         addNewValue()
         addNewValue()
     }

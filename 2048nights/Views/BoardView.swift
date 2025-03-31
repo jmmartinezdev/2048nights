@@ -12,10 +12,10 @@ struct BoardView: View {
     
     var body: some View {
         VStack(spacing: 8) {
-            ForEach(model.board, id: \.id) { rowModel in
+            ForEach(0..<model.board.count, id: \.self) { nRow in
                 HStack(spacing: 8) {
-                    ForEach(rowModel.cells, id: \.id) { cellModel in
-                        CellView(model: cellModel)
+                    ForEach(0..<model.board[nRow].count, id: \.self) { nColumn in
+                        CellView(model: model.board[nRow][nColumn])
                         
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
