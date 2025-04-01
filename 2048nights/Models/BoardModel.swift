@@ -31,12 +31,16 @@ class BoardModel: ObservableObject {
         }
     }
     
+    private func getCellFor(_ row: Int, _ column: Int) -> CellModel {
+        board[row][column]
+    }
+    
     func getValueFor(_ row: Int, _ column: Int) -> Int {
-        return board[row][column].value
+        return getCellFor(row, column).value
     }
     
     func setValue(_ row: Int, _ column: Int, _ value: Int) {
-        board[row][column].value = value
+        getCellFor(row, column).value = value
     }
     
     func isWithinBounds(_ row: Int, _ column: Int) -> Bool {
@@ -52,11 +56,11 @@ class BoardModel: ObservableObject {
     }
     
     func setIsMerged(_ row: Int, _ column: Int, isMerged: Bool) { 
-        board[row][column].isMerged = isMerged
+        getCellFor(row, column).isMerged = isMerged
     }
     
     func isMerged(_ row: Int, _ column: Int) -> Bool {
-        return board[row][column].isMerged
+        return getCellFor(row, column).isMerged
     }
     
     private func generateValue() -> Int {
