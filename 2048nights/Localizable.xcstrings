@@ -2,26 +2,32 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%lld" : {
-
+      "shouldTranslate" : false
     },
     "➡" : {
-
+      "shouldTranslate" : false
     },
     "⬅" : {
-
+      "shouldTranslate" : false
     },
     "⬆" : {
-
+      "shouldTranslate" : false
     },
     "⬇" : {
-
+      "shouldTranslate" : false
     },
     "continue_playing" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "keep going"
+            "value" : "Keep going"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
           }
         }
       }
@@ -33,6 +39,12 @@
             "state" : "translated",
             "value" : "Score"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puntos"
+          }
         }
       }
     },
@@ -43,6 +55,12 @@
             "state" : "translated",
             "value" : "Game over!"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin del juego!"
+          }
         }
       }
     },
@@ -52,6 +70,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "High score"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Récord"
           }
         }
       }
@@ -64,6 +88,12 @@
             "state" : "translated",
             "value" : "Restart game"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar"
+          }
         }
       }
     },
@@ -74,6 +104,12 @@
             "state" : "translated",
             "value" : "Try again"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintentar"
+          }
         }
       }
     },
@@ -83,6 +119,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You won!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganaste!"
           }
         }
       }
