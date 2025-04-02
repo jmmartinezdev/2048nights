@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CellView: View {
     @ObservedObject var model: CellModel
+    @State var justMerged: Bool = false
     
     var body: some View {
         Text(model.getValueText())
@@ -21,6 +22,16 @@ struct CellView: View {
             .cornerRadius(8)
             .accessibilityShowsLargeContentViewer {
                 Text(model.getValueTextForLargeContentViewer())
+            }
+            .scaleEffect(justMerged ? 1.1 : 1)
+            .animation(.easeInOut(duration: 0.05), value: justMerged)
+            .onReceive(model.$isMerged) { isMerged in
+                if isMerged {
+                    justMerged = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        justMerged = false
+                    }
+                }
             }
     }
     
