@@ -155,7 +155,7 @@ class GameModel: ObservableObject {
         }
         
         if didMove {
-            board.addNewValue()
+            board.addNewRandomValue()
             score.updateHighScoreIfNeeded()
             if !areMovesPossible() {
                 gameOver = true
