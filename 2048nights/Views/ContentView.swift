@@ -13,63 +13,65 @@ struct ContentView: View {
 
     var body: some View {
 
-        Color.contentBackground
-            .ignoresSafeArea()
-            .overlay {
-                VStack {
-                    RestartGameView {
-                        model.resetGame()
+        ZStack {
+            Color
+                .contentBackground
+                .ignoresSafeArea()
+            
+            VStack {
+                RestartGameView {
+                    model.resetGame()
+                }
+
+                ScoreView(model: model.score)
+
+                BoardView(model: model.board)
+                    .padding()
+                    .gesture(
+                        DragGesture(
+                            minimumDistance: 20, coordinateSpace: .global
+                        ).onEnded({ value in
+                            computeGesture(
+                                value.translation.width,
+                                value.translation.height)
+                        })
+                    )
+                    .focusable()
+                    .focused($isFocused)
+                    .onKeyPress(
+                        keys: [
+                            .upArrow, .downArrow, .leftArrow, .rightArrow,
+                        ],
+                        action: { keyPress in
+                            processKeyboard(keyPress)
+                            return .handled
+                        }
+                    )
+                    .onAppear(perform: {
+                        isFocused = true
+                    })
+                    .overlay {
+                        if model.gameOver {
+                            GameOverMessageView {
+                                model.resetGame()
+                            }
+                        }
+                    }
+                    .overlay {
+                        if model.hasWon && !model.continuePlaying {
+                            WinMessageView {
+                                model.resetGame()
+                            } continueAction: {
+                                model.continuePlaying = true
+                            }
+                        }
                     }
 
-                    ScoreView(model: model.score)
-
-                    BoardView(model: model.board)
-                        .padding()
-                        .gesture(
-                            DragGesture(
-                                minimumDistance: 20, coordinateSpace: .global
-                            ).onEnded({ value in
-                                computeGesture(
-                                    value.translation.width,
-                                    value.translation.height)
-                            })
-                        )
-                        .focusable()
-                        .focused($isFocused)
-                        .onKeyPress(
-                            keys: [
-                                .upArrow, .downArrow, .leftArrow, .rightArrow,
-                            ],
-                            action: { keyPress in
-                                processKeyboard(keyPress)
-                                return .handled
-                            }
-                        )
-                        .onAppear(perform: {
-                            isFocused = true
-                        })
-                        .overlay {
-                            if model.gameOver {
-                                GameOverMessageView {
-                                    model.resetGame()
-                                }
-                            }
-                        }
-                        .overlay {
-                            if model.hasWon && !model.continuePlaying {
-                                WinMessageView {
-                                    model.resetGame()
-                                } continueAction: {
-                                    model.continuePlaying = true
-                                }
-                            }
-                        }
-
-//                        ArrowButtonsView { direction in
-//                            model.move(direction: direction)
-//                        }
-                }
+//                    ArrowButtonsView { direction in
+//                        model.move(direction: direction)
+//                    }
             }
+        }
     }
     
     func processKeyboard(_ keyPress: KeyPress) {
