@@ -23,7 +23,7 @@ struct ContentView: View {
                     model.resetGame()
                 }
 
-                ScoreView(model: model.score)
+                ScoreContainerView(model: model.score)
 
                 BoardView(model: model.board)
                     .padding()
