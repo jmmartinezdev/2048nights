@@ -12,7 +12,7 @@ struct CellView: View {
     
     var body: some View {
         Text(model.getValueText())
-            .font(.title)
+            .font(.system(size: getFontSize(), weight: .medium))
             .frame(minWidth: 72, maxWidth: .infinity, minHeight: 72, maxHeight: .infinity)
             .foregroundStyle(.cellText)
             .background(model.getBackgroundColor())
@@ -22,5 +22,17 @@ struct CellView: View {
             .accessibilityShowsLargeContentViewer {
                 Text(model.getValueTextForLargeContentViewer())
             }
+    }
+    
+    func getFontSize() -> CGFloat {
+        if model.value < 128 {
+            return 55
+        } else if model.value < 1024 {
+            return 40
+        } else if model.value <= 2048 {
+            return 30
+        } else {
+            return 25
+        }
     }
 }
