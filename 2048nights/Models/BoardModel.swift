@@ -125,3 +125,36 @@ class BoardModel: ObservableObject {
         return boardString
     }
 }
+
+// MARK: Extension for testing
+extension BoardModel {
+    
+    convenience init(size: Int = 4, board: [[Int]]) {
+        self.init(size: 4)
+        self.board = []
+        self.createRows(boardNumbers: board)
+        for _ in 0..<startingCells {
+            self.addNewRandomValue()
+        }
+        
+    }
+    
+    private func createRows(boardNumbers: [[Int]]) {
+        for i in 0..<size {
+            var row: [CellModel] = []
+            for j in 0..<size {
+                let cell = CellModel(id: j)
+                cell.value = boardNumbers[i][j]
+                row.append(cell)
+            }
+            board.append(row)
+        }
+    }
+    
+    static let exampleBoard = [
+        [2, 0, 0, 0],
+        [2, 4, 8, 16],
+        [32, 64, 128, 256],
+        [4096, 2048, 1024, 512],
+    ]
+}
