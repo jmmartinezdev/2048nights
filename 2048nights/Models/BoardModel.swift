@@ -75,6 +75,7 @@ class BoardModel: ObservableObject {
             if isCellAvailable(row, column) {
                 let value = generateValue()
                 setValue(row, column, value)
+                print("New value added \(row) \(column) : \(value)")
                 valueAdded = true
             }
         }

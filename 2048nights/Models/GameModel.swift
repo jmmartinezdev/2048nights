@@ -105,35 +105,45 @@ class GameModel: ObservableObject {
         
         orderedRows.forEach { row in 
             orderedColumns.forEach { column in
+                // Skip if cell is empty
                 guard !board.isCellAvailable(row, column) else {
                     return
                 }
-                let (nextRow, nextColumn) = findFurthestEmptyCell(row, column, vectorRow, vectorColumn)
                 
-                guard board.isWithinBounds(nextRow, nextColumn) else {
+                // Find furthest adjacent empty cell
+                let (newRow, newColumn) = findFurthestEmptyCell(row, column, vectorRow, vectorColumn)
+                
+                guard board.isWithinBounds(newRow, newColumn) else {
+                    print("1. Out of bounds \(newRow) \(newColumn)")
                     return
                 }
                 
                 let currentValue = board.getValueFor(row, column)
                 
-                if (row != nextRow) || (column != nextColumn) {
+                // If the new position is different, move to it
+                if (row != newRow) || (column != newColumn) {
+                    print("Moving \(row) \(column) to \(newRow) \(newColumn): \(currentValue)")
                     board.setValue(row, column, 0)
-                    board.setValue(nextRow, nextColumn, currentValue)
+                    board.setValue(newRow, newColumn, currentValue)
                     didMove = true
                 }
                 
-                guard board.isWithinBounds(nextRow+vectorRow, nextColumn+vectorColumn) else {
+                // Evaluate next row if within bounds
+                let (nextRow, nextColumn) = (newRow+vectorRow, newColumn+vectorColumn)
+                guard board.isWithinBounds(nextRow, nextColumn) else {
+                    print("2. Out of bounds \(nextRow) \(nextColumn)")
                     return
                 }
                 
-                let nextValue = board.getValueFor(nextRow+vectorRow, nextColumn+vectorColumn)
-                if nextValue == currentValue,
-                    !board.isMerged(nextRow+vectorRow, nextColumn+vectorColumn) {
+                // If the value is the same and isn't previously merged, we merge into the next cell
+                let nextValue = board.getValueFor(nextRow, nextColumn)
+                if nextValue == currentValue, !board.isMerged(nextRow, nextColumn) {
                     
                     let mergedValue = currentValue+nextValue
-                    board.setValue(nextRow+vectorRow, nextColumn+vectorColumn, mergedValue)
-                    board.setValue(nextRow, nextColumn, 0)
-                    board.setIsMerged(nextRow+vectorRow, nextColumn+vectorColumn, isMerged: true)
+                    print("Merging \(newRow) \(newColumn) into \(nextRow) \(nextColumn): \(mergedValue)")
+                    board.setValue(nextRow, nextColumn, mergedValue)
+                    board.setValue(newRow, newColumn, 0)
+                    board.setIsMerged(nextRow, nextColumn, isMerged: true)
                     score.addScore(mergedValue)
                     if mergedValue == 2048 {
                         self.hasWon = true
