@@ -9,6 +9,7 @@ import Combine
 
 class BoardModel: ObservableObject {
     let size: Int
+    let startingCells = 2
     
     @Published var board: [[CellModel]]
     
@@ -16,8 +17,9 @@ class BoardModel: ObservableObject {
         self.size = size
         self.board = []
         self.createRows()
-        self.addNewValue()
-        self.addNewValue()
+        for _ in 0..<startingCells {
+            self.addNewRandomValue()
+        }
         
     }
     
@@ -67,7 +69,7 @@ class BoardModel: ObservableObject {
         return Double.random(in: 0...1) > 0.9 ? 4 : 2
     }
     
-    func addNewValue() {
+    func addNewRandomValue() {
         var valueAdded = false
         while !valueAdded {
             let row = Int.random(in: 0..<size)
@@ -83,8 +85,9 @@ class BoardModel: ObservableObject {
     
     func resetBoard() {
         board.forEach({ $0.forEach({ $0.resetCell() }) })
-        addNewValue()
-        addNewValue()
+        for _ in 0..<startingCells {
+            addNewRandomValue()
+        }
     }
     
     func prepareForMove() {
