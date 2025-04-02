@@ -48,6 +48,23 @@
         }
       }
     },
+    "empty_cell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vacía"
+          }
+        }
+      }
+    },
     "game_over" : {
       "localizations" : {
         "en" : {

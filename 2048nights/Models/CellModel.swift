@@ -25,6 +25,13 @@ class CellModel: ObservableObject {
         return "\(value)"
     }
     
+    func getValueTextForLargeContentViewer() -> String {
+        guard value > 0 else {
+            return String(localized: "empty_cell")
+        }
+        return "\(value)"
+    }
+    
     func getBackgroundColor() -> Color {
         if value < 8 {
             return .cellBackgroundLower

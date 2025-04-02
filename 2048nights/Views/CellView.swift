@@ -19,5 +19,8 @@ struct CellView: View {
             .aspectRatio(1.0, contentMode: .fit)
             .lineLimit(1)
             .cornerRadius(8)
+            .accessibilityShowsLargeContentViewer {
+                Text(model.getValueTextForLargeContentViewer())
+            }
     }
 }
