@@ -77,6 +77,7 @@ class BoardModel: ObservableObject {
             if isCellAvailable(row, column) {
                 let value = generateValue()
                 setValue(row, column, value)
+                getCellFor(row, column).newlyAdded = true
                 print("New value added \(row) \(column) : \(value)")
                 valueAdded = true
             }
@@ -94,6 +95,7 @@ class BoardModel: ObservableObject {
         for i in 0..<size {
             for j in 0..<size {
                 setIsMerged(i, j, isMerged: false)
+                getCellFor(i, j).newlyAdded = false
             }
         }
     }

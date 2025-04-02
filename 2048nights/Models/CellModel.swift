@@ -17,6 +17,7 @@ class CellModel: ObservableObject {
     let id: Int
     @Published var value: Int = 0
     @Published var isMerged: Bool = false
+    @Published var newlyAdded: Bool = false
     
     func getValueText() -> String {
         guard value > 0 else {

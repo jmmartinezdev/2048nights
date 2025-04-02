@@ -10,12 +10,24 @@ import SwiftUI
 struct CellView: View {
     @ObservedObject var model: CellModel
     @State var justMerged: Bool = false
+    @State var justAdded: Bool = false
     
     var body: some View {
         Text(model.getValueText())
             .font(.system(size: getFontSize(), weight: .medium))
             .frame(minWidth: 72, maxWidth: .infinity, minHeight: 72, maxHeight: .infinity)
             .foregroundStyle(.cellText)
+            .scaleEffect(justAdded ? 0.5 : 1)
+            .opacity(justAdded ? 0 : 1)
+            .animation(.easeInOut(duration: 0.05), value: justAdded)
+            .onReceive(model.$newlyAdded) { newlyAdded in
+                if newlyAdded {
+                    justAdded = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        justAdded = false
+                    }
+                }
+            }
             .background(model.getBackgroundColor())
             .aspectRatio(1.0, contentMode: .fit)
             .lineLimit(1)
