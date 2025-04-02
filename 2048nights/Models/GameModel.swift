@@ -73,42 +73,42 @@ class GameModel: ObservableObject {
             }
     }
     
+    func getOrderedIndices(direction: MoveDirection) -> ([Int], [Int]) {
+        var orderedRows: [Int]
+        var orderedColumns: [Int]
+        switch direction {
+        case .up:
+            orderedRows = Array(0..<board.size)
+            orderedColumns = Array(0..<board.size)
+        case .left:
+            orderedRows = Array(0..<board.size)
+            orderedColumns = Array(0..<board.size)
+        case .right:
+            orderedRows = Array(0..<board.size)
+            orderedColumns = Array(0..<board.size).reversed()
+        case .down:
+            orderedRows = Array(0..<board.size).reversed()
+            orderedColumns = Array(0..<board.size)
+        }
+        return (orderedRows, orderedColumns)
+    }
+    
     func move(direction: MoveDirection) {
         var didMove = false
         
         board.prepareForMove()
         
-//        let (vectorX, vectorY) = getVector(direction: direction)
+        let (vectorRow, vectorColumn) = getVector(direction: direction)
+        let (orderedRows, orderedColumns) = getOrderedIndices(direction: direction)
         
-        var (vectorX, vectorY): (Int, Int)
-        var orderedRows: [Int]
-        var orderedColumns: [Int]
-        switch direction {
-        case .up:
-            (vectorX, vectorY) = (-1, 0)
-            orderedRows = Array(0..<board.size)
-            orderedColumns = Array(0..<board.size)
-        case .left:
-            (vectorX, vectorY) = (0, -1)
-            orderedRows = Array(0..<board.size)
-            orderedColumns = Array(0..<board.size)
-        case .right:
-            (vectorX, vectorY) = (0, 1)
-            orderedRows = Array(0..<board.size)
-            orderedColumns = Array(0..<board.size).reversed()
-        case .down:
-            (vectorX, vectorY) = (1, 0)
-            orderedRows = Array(0..<board.size).reversed()
-            orderedColumns = Array(0..<board.size)
-        }
-        print("Moving \(direction) (\(vectorX) \(vectorY)) \(orderedRows) \(orderedColumns)")
+        print("Moving \(direction) (\(vectorRow) \(vectorColumn)) \(orderedRows) \(orderedColumns)")
         
         orderedRows.forEach { row in 
             orderedColumns.forEach { column in
                 guard !board.isCellAvailable(row, column) else {
                     return
                 }
-                let (nextRow, nextColumn) = findNearestValue(row: row, column: column, vectorX: vectorX, vectorY: vectorY)
+                let (nextRow, nextColumn) = findNearestValue(row, column, vectorRow, vectorColumn)
                 
                 guard board.isWithinBounds(nextRow, nextColumn) else {
                     return
@@ -122,19 +122,20 @@ class GameModel: ObservableObject {
                     didMove = true
                 }
                 
-                guard board.isWithinBounds(nextRow+vectorX, nextColumn+vectorY) else {
+                guard board.isWithinBounds(nextRow+vectorRow, nextColumn+vectorColumn) else {
                     return
                 }
                 
-                let nextValue = board.getValueFor(nextRow+vectorX, nextColumn+vectorY)
+                let nextValue = board.getValueFor(nextRow+vectorRow, nextColumn+vectorColumn)
                 if nextValue == currentValue,
-                    !board.isMerged(nextRow+vectorX, nextColumn+vectorY) {
+                    !board.isMerged(nextRow+vectorRow, nextColumn+vectorColumn) {
                     
-                    board.setValue(nextRow+vectorX, nextColumn+vectorY, currentValue+nextValue)
+                    let mergedValue = currentValue+nextValue
+                    board.setValue(nextRow+vectorRow, nextColumn+vectorColumn, mergedValue)
                     board.setValue(nextRow, nextColumn, 0)
-                    board.setIsMerged(nextRow+vectorX, nextColumn+vectorY, isMerged: true)
-                    score.addScore(currentValue+nextValue)
-                    if currentValue+nextValue == 2048 {
+                    board.setIsMerged(nextRow+vectorRow, nextColumn+vectorColumn, isMerged: true)
+                    score.addScore(mergedValue)
+                    if mergedValue == 2048 {
                         self.hasWon = true
                     }
                     didMove = true
@@ -153,7 +154,7 @@ class GameModel: ObservableObject {
         
     }
     
-    func findNearestValue(row: Int, column: Int, vectorX: Int, vectorY: Int) -> (Int, Int) {
+    func findNearestValue(_ row: Int, _ column: Int, _ vectorX: Int, _ vectorY: Int) -> (Int, Int) {
         var (newRow, newColumn) = (row, column)
         var nearestValueFound = false
         while !nearestValueFound {
