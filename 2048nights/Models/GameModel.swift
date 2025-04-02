@@ -108,7 +108,7 @@ class GameModel: ObservableObject {
                 guard !board.isCellAvailable(row, column) else {
                     return
                 }
-                let (nextRow, nextColumn) = findNearestValue(row, column, vectorRow, vectorColumn)
+                let (nextRow, nextColumn) = findFurthestEmptyCell(row, column, vectorRow, vectorColumn)
                 
                 guard board.isWithinBounds(nextRow, nextColumn) else {
                     return
@@ -154,17 +154,13 @@ class GameModel: ObservableObject {
         
     }
     
-    func findNearestValue(_ row: Int, _ column: Int, _ vectorX: Int, _ vectorY: Int) -> (Int, Int) {
-        var (newRow, newColumn) = (row, column)
-        var nearestValueFound = false
-        while !nearestValueFound {
-            (newRow, newColumn) = (newRow+vectorX, newColumn+vectorY)
-            guard board.isWithinBounds(newRow, newColumn), 
-                    board.isCellAvailable(newRow, newColumn) else {
-                nearestValueFound = true
-               return (newRow-vectorX, newColumn-vectorY)
-            }
+    func findFurthestEmptyCell(_ currentRow: Int, _ currentColumn: Int, _ vectorRow: Int, _ vectorColumn: Int) -> (Int, Int) {
+        var (row, column) = (currentRow, currentColumn)
+        var (nextRow, nextColumn) = (row+vectorRow, column+vectorColumn)
+        while board.isWithinBounds(nextRow, nextColumn) && board.isCellAvailable(nextRow, nextColumn) {
+            (row, column) = (nextRow, nextColumn)
+            (nextRow, nextColumn) = (row+vectorRow, column+vectorColumn)
         }
-        return (newRow-vectorX, newColumn-vectorY)
+        return (row, column)
     }
 }
