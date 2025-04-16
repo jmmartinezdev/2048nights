@@ -34,7 +34,9 @@ class CellModel: ObservableObject {
     }
     
     func getBackgroundColor() -> Color {
-        if value < 8 {
+        if value == 0 {
+            return .clear
+        } else if value < 8 {
             return .cellBackgroundLower
         } else if value == 8 {
             return .cellBackground8

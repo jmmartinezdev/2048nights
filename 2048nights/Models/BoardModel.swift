@@ -99,33 +99,6 @@ class BoardModel: ObservableObject {
             }
         }
     }
-    
-    func getFormattedValue(_ row: Int, _ column: Int) -> String {
-        let value = getValueFor(row, column)
-        if value == 0 {
-            return "   -"
-        } else if value < 10 {
-            return "   \(value)"
-        } else if value < 100 {
-            return "  \(value)"
-        } else if value < 1000 {
-            return " \(value)"
-        } else {
-            return "\(value)"
-        }
-    }
-    
-    func getBoardString() -> String {
-        var boardString = ""
-        for i in 0..<size {
-            for j in 0..<size {
-                boardString.append(" \(getFormattedValue(i, j))")
-            }
-            boardString.append("\n")
-        }
-        boardString.append("\n")
-        return boardString
-    }
 }
 
 // MARK: Extension for testing

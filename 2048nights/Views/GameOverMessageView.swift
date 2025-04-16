@@ -13,7 +13,7 @@ struct GameOverMessageView: View {
         VStack() {
            Text("game_over")
                 .font(.largeTitle)
-                .foregroundStyle(.accent)
+                .foregroundStyle(.gameOverText)
             
             Button(action: {
                 restartAction()
@@ -26,7 +26,7 @@ struct GameOverMessageView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.boardLines.opacity(0.7))
+        .background(.gameOverBackground)
         .cornerRadius(8)
         .padding()
     }

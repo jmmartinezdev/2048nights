@@ -16,7 +16,7 @@ struct BoardView: View {
                 HStack(spacing: 8) {
                     ForEach(0..<model.board[nRow].count, id: \.self) { nColumn in
                         CellView(model: model.board[nRow][nColumn])
-                        
+                            .background(.cellBackgroundEmpty)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }

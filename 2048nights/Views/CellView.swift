@@ -17,6 +17,13 @@ struct CellView: View {
             .font(.system(size: getFontSize(), weight: .medium))
             .frame(minWidth: 72, maxWidth: .infinity, minHeight: 72, maxHeight: .infinity)
             .foregroundStyle(.cellText)
+            .background(model.getBackgroundColor())
+            .aspectRatio(1.0, contentMode: .fit)
+            .lineLimit(1)
+            .cornerRadius(8)
+            .accessibilityShowsLargeContentViewer {
+                Text(model.getValueTextForLargeContentViewer())
+            }
             .scaleEffect(justAdded ? 0.5 : 1)
             .opacity(justAdded ? 0 : 1)
             .animation(.easeInOut(duration: 0.05), value: justAdded)
@@ -27,13 +34,6 @@ struct CellView: View {
                         justAdded = false
                     }
                 }
-            }
-            .background(model.getBackgroundColor())
-            .aspectRatio(1.0, contentMode: .fit)
-            .lineLimit(1)
-            .cornerRadius(8)
-            .accessibilityShowsLargeContentViewer {
-                Text(model.getValueTextForLargeContentViewer())
             }
             .scaleEffect(justMerged ? 1.1 : 1)
             .animation(.easeInOut(duration: 0.05), value: justMerged)

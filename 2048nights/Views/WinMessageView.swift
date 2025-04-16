@@ -14,7 +14,7 @@ struct WinMessageView: View {
         VStack {
             Text("you_won")
                 .font(.largeTitle)
-                .foregroundStyle(.accent)
+                .foregroundStyle(.winText)
 
             HStack {
 
@@ -24,7 +24,8 @@ struct WinMessageView: View {
                     Text("continue_playing")
                         .font(.headline)
                         .padding()
-                        .background(.buttonBackground)
+                        .foregroundStyle(.secondaryButtonText)
+                        .background(.secondaryButtonBackground)
                         .cornerRadius(8)
                 }
                 
@@ -34,7 +35,8 @@ struct WinMessageView: View {
                     Text("try_again")
                         .font(.headline)
                         .padding()
-                        .background(.buttonBackground)
+                        .foregroundStyle(.secondaryButtonText)
+                        .background(.secondaryButtonBackground)
                         .cornerRadius(8)
                 }
             }
@@ -42,7 +44,7 @@ struct WinMessageView: View {
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.boardLines.opacity(0.7))
+        .background(.winBackground)
         .cornerRadius(8)
         .padding()
     }
