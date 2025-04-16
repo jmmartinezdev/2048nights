@@ -17,6 +17,7 @@ struct BoardView: View {
                     ForEach(0..<model.board[nRow].count, id: \.self) { nColumn in
                         CellView(model: model.board[nRow][nColumn])
                             .background(.cellBackgroundEmpty)
+                            .cornerRadius(8)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
